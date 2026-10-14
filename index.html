@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Friendly — Recherche utilisateur</title>
+<meta name="description" content="User Friendly : recherche utilisateur, utilisabilité et confiance dans l'IA, regard ethnographique. Par Xavier Marie.">
+<meta property="og:title" content="User Friendly">
+<meta property="og:description" content="Recherche utilisateur, utilisabilité et confiance dans l'IA, regard ethnographique.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://user-friendly.fr/">
+<meta name="theme-color" content="#1E2A22">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='6' fill='%231E2A22'/%3E%3Ctext x='29' y='45' font-family='Georgia,serif' font-size='36' font-style='italic' text-anchor='middle' fill='%23E6EBE3'%3EUF%3C/text%3E%3Crect x='50' y='16' width='4' height='32' fill='%2386C5B9'/%3E%3C/svg%3E">
+<link rel="preload" href="./fonts/literata-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* Literata (SIL Open Font License, see fonts/OFL.txt), self-hosted */
+@font-face { font-family: 'Literata'; font-style: normal; font-weight: 200 900; font-display: swap;
+  src: url('./fonts/literata-latin-opsz-normal.woff2') format('woff2-variations'); }
+@font-face { font-family: 'Literata'; font-style: italic; font-weight: 200 900; font-display: swap;
+  src: url('./fonts/literata-latin-opsz-italic.woff2') format('woff2-variations'); }
+
+:root {
+  --paper: #E6EBE3;
+  --ink: #1E2A22;
+  --muted: #45524A;   /* 7.0:1 on paper */
+  --teal: #1F6F66;    /* 5.4:1 on paper */
+  --serif: 'Literata', Georgia, serif;
+  --gutter: clamp(1.25rem, 5vw, 4rem);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--paper); }
+body {
+  font-family: var(--serif); font-optical-sizing: auto;
+  font-size: clamp(1.02rem, .96rem + .3vw, 1.2rem); line-height: 1.6;
+  color: var(--ink); background: var(--paper); min-height: 100vh;
+  display: flex; flex-direction: column; -webkit-font-smoothing: antialiased;
+}
+a { color: var(--teal); text-underline-offset: .2em; text-decoration-thickness: 1px; }
+:focus-visible { outline: 3px solid var(--teal); outline-offset: 4px; }
+.wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
+
+.top { display: flex; justify-content: space-between; align-items: center; padding-top: 1.5rem; font-size: .95rem; }
+.top a { color: var(--muted); text-decoration: none; }
+.top a:hover { color: var(--ink); text-decoration: underline; }
+.lang { display: flex; gap: .25rem; }
+.lang button { font: inherit; background: none; border: 0; color: var(--muted); padding: .35rem .55rem; min-width: 2.75rem; min-height: 2.75rem; cursor: pointer; }
+.lang button[aria-pressed="true"] { color: var(--ink); font-weight: 600; text-decoration: underline; text-underline-offset: .3em; text-decoration-thickness: 2px; }
+
+/* Wordmark: the one loud thing — a text caret after "Friendly" */
+.intro { padding: clamp(3rem, 11vw, 8.5rem) 0 clamp(2.5rem, 6vw, 4.5rem); }
+h1 {
+  font-weight: 650; font-size: clamp(3.6rem, 15.5vw, 12.5rem); line-height: .86; letter-spacing: -.045em; margin-left: -.04em;
+}
+h1 .f { display: block; font-style: italic; font-weight: 300; white-space: nowrap; }
+.caret { display: inline-block; width: .055em; height: .78em; background: var(--teal); margin-left: .06em; vertical-align: -.02em; }
+@media (prefers-reduced-motion: no-preference) {
+  .caret { animation: blink 1.1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+}
+.lede { max-width: 30ch; margin-top: clamp(1.75rem, 4vw, 2.75rem); font-size: clamp(1.2rem, 1rem + .9vw, 1.65rem); line-height: 1.4; }
+
+/* What the practice covers: not a sequence, so no numbers */
+.fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 2px solid var(--ink); }
+.fields > div { padding: 1.5rem 1.5rem 1.75rem 0; }
+.fields > div + div { padding-left: 1.5rem; border-left: 1px solid rgba(30,42,34,.3); }
+.fields h2 { font-size: 1.2rem; font-weight: 600; line-height: 1.3; margin-bottom: .5rem; }
+.fields p { color: var(--muted); font-size: .98rem; }
+@media (max-width: 760px) {
+  .fields { grid-template-columns: 1fr; }
+  .fields > div, .fields > div + div { padding: 1.25rem 0; border-left: 0; }
+  .fields > div + div { border-top: 1px solid rgba(30,42,34,.3); }
+}
+.status { margin-top: 2rem; color: var(--muted); font-style: italic; }
+
+.contact { margin-top: auto; padding-top: clamp(3.5rem, 8vw, 6rem); padding-bottom: 2.5rem; display: flex; justify-content: space-between; gap: 1rem 2rem; flex-wrap: wrap; align-items: flex-end; }
+.contact .big { font-size: clamp(1.1rem, 1rem + .6vw, 1.45rem); }
+.contact .small { font-size: .88rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap top">
+  <a href="https://xaviermarie.com/">xaviermarie.com</a>
+  <div class="lang" role="group" aria-label="Langue / Language">
+    <button type="button" data-lang="fr" aria-pressed="true" lang="fr">FR</button>
+    <button type="button" data-lang="en" aria-pressed="false" lang="en">EN</button>
+  </div>
+</div>
+
+<main class="wrap">
+  <header class="intro">
+    <h1>User <span class="f">Friendly<span class="caret" aria-hidden="true"></span></span></h1>
+    <p class="lede" data-i="lede">Recherche utilisateur pour des produits qu'on comprend, et en qui on peut avoir confiance.</p>
+  </header>
+
+  <section class="fields" aria-label="Domaines">
+    <div>
+      <h2 data-i="f1">Utilisabilité et confiance dans l'IA</h2>
+      <p data-i="f1d">Évaluer comment les gens comprennent, utilisent et jugent les assistants et services fondés sur l'IA.</p>
+    </div>
+    <div>
+      <h2 data-i="f2">Recherche ethnographique</h2>
+      <p data-i="f2d">Observer les usages là où ils se passent, pour comprendre ce que les tableaux de bord ne disent pas.</p>
+    </div>
+    <div>
+      <h2 data-i="f3">Accompagnement des équipes</h2>
+      <p data-i="f3d">Former designers et product managers à la recherche exploratoire et aux tests, au fil des projets.</p>
+    </div>
+  </section>
+  <p class="status" data-i="status">Le site complet est en préparation.</p>
+</main>
+
+<footer class="wrap contact">
+  <p class="big"><span data-i="write">Pour un projet :</span> <a href="mailto:xaviateur@gmail.com">xaviateur@gmail.com</a></p>
+  <p class="small"><span data-i="by">Par</span> <a href="https://xaviermarie.com/">Xavier Marie</a>, <span data-i="role">chercheur UX senior et ethnologue</span>. <span data-i="place">Londres et sud de la France.</span></p>
+</footer>
+
+<script>
+const t = {
+  fr: {
+    title: 'User Friendly — Recherche utilisateur',
+    lede: "Recherche utilisateur pour des produits qu'on comprend, et en qui on peut avoir confiance.",
+    f1: "Utilisabilité et confiance dans l'IA",
+    f1d: "Évaluer comment les gens comprennent, utilisent et jugent les assistants et services fondés sur l'IA.",
+    f2: 'Recherche ethnographique',
+    f2d: 'Observer les usages là où ils se passent, pour comprendre ce que les tableaux de bord ne disent pas.',
+    f3: 'Accompagnement des équipes',
+    f3d: 'Former designers et product managers à la recherche exploratoire et aux tests, au fil des projets.',
+    status: 'Le site complet est en préparation.',
+    write: 'Pour un projet :', by: 'Par', role: 'chercheur UX senior et ethnologue', place: 'Londres et sud de la France.'
+  },
+  en: {
+    title: 'User Friendly — User research',
+    lede: 'User research for products people understand, and can trust.',
+    f1: 'AI usability and trust',
+    f1d: 'Assessing how people understand, use and judge AI-based assistants and services.',
+    f2: 'Ethnographic research',
+    f2d: "Observing practices where they happen, to understand what dashboards don't show.",
+    f3: 'Team coaching',
+    f3d: 'Training designers and product managers in exploratory research and testing, project by project.',
+    status: 'The full site is in preparation.',
+    write: 'For a project:', by: 'By', role: 'senior UX researcher and ethnologist', place: 'London and the south of France.'
+  }
+};
+function setLang(l) {
+  l = l === 'en' ? 'en' : 'fr';
+  document.documentElement.lang = l; document.title = t[l].title;
+  document.querySelectorAll('[data-i]').forEach(el => { const v = t[l][el.dataset.i]; if (v) el.textContent = v; });
+  document.querySelectorAll('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === l)));
+  try { localStorage.setItem('uf-lang', l); } catch (e) {}
+}
+document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+let saved = null; try { saved = localStorage.getItem('uf-lang'); } catch (e) {}
+setLang(saved || ((navigator.language || 'fr').toLowerCase().startsWith('en') ? 'en' : 'fr'));
+</script>
+</body>
+</html>
