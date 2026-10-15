@@ -119,7 +119,7 @@ h1 > span:first-child .q { margin-left: -.42em; }   /* hang the opening quote in
 </main>
 
 <footer class="wrap contact">
-  <p class="big"><span data-i="write">Pour un projet :</span> <a href="mailto:bonjour@user-friendly.fr">bonjour@user-friendly.fr</a></p>
+  <p class="big"><span data-i="write">Pour un projet :</span> <a href="mailto:bonjour@user-friendly.fr" id="mail">bonjour@user-friendly.fr</a></p>
   <p class="small"><span data-i="by">Par</span> <a href="https://xaviermarie.com/">Xavier Marie</a>, <span data-i="role">chercheur UX senior et ethnologue</span>. <span data-i="place">Londres, Paris et Montpellier.</span> <a href="./mentions-legales.html" data-i="legal">Mentions légales</a></p>
 </footer>
 
@@ -135,7 +135,8 @@ const t = {
     f3: 'Accompagnement des équipes',
     f3d: 'Former designers et product managers à la recherche exploratoire et aux tests, au fil des projets.',
     status: 'Le site complet est en préparation.',
-    write: 'Pour un projet :', by: 'Par', role: 'chercheur UX senior et ethnologue', place: 'Londres, Paris et Montpellier.', legal: 'Mentions légales'
+    write: 'Pour un projet :', by: 'Par', role: 'chercheur UX senior et ethnologue', place: 'Londres, Paris et Montpellier.', legal: 'Mentions légales',
+    mail: 'bonjour@user-friendly.fr'
   },
   en: {
     title: 'User Friendly — User research',
@@ -147,19 +148,23 @@ const t = {
     f3: 'Team coaching',
     f3d: 'Training designers and product managers in exploratory research and testing, project by project.',
     status: 'The full site is in preparation.',
-    write: 'For a project:', by: 'By', role: 'senior UX researcher and ethnologist', place: 'London, Paris and Montpellier.', legal: 'Legal notice'
+    write: 'For a project:', by: 'By', role: 'senior UX researcher and ethnologist', place: 'London, Paris and Montpellier.', legal: 'Legal notice',
+    mail: 'hello@user-friendly.co.uk'
   }
 };
 function setLang(l) {
   l = l === 'en' ? 'en' : 'fr';
   document.documentElement.lang = l; document.title = t[l].title;
   document.querySelectorAll('[data-i]').forEach(el => { const v = t[l][el.dataset.i]; if (v) el.textContent = v; });
+  const mail = document.getElementById('mail'); mail.href = 'mailto:' + t[l].mail; mail.textContent = t[l].mail;
   document.querySelectorAll('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === l)));
   try { localStorage.setItem('uf-lang', l); } catch (e) {}
 }
 document.querySelectorAll('.lang button').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
 let saved = null; try { saved = localStorage.getItem('uf-lang'); } catch (e) {}
-setLang(saved || ((navigator.language || 'fr').toLowerCase().startsWith('en') ? 'en' : 'fr'));
+// The .co.uk address opens in English; elsewhere, the reader's last choice, then the browser language.
+const ukHost = /(^|\.)user-friendly\.co\.uk$/.test(location.hostname);
+setLang(ukHost ? 'en' : (saved || ((navigator.language || 'fr').toLowerCase().startsWith('en') ? 'en' : 'fr')));
 </script>
 </body>
 </html>
