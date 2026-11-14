@@ -5,10 +5,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>User Friendly — Recherche utilisateur</title>
 <meta name="description" content="User Friendly : recherche utilisateur, utilisabilité et confiance dans l'IA, regard ethnographique. Par Xavier Marie.">
-<meta property="og:title" content="User Friendly">
+<meta property="og:site_name" content="User Friendly">
+<meta property="og:title" content="User Friendly — Recherche utilisateur">
 <meta property="og:description" content="Recherche utilisateur, utilisabilité et confiance dans l'IA, regard ethnographique.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://user-friendly.fr/">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:locale:alternate" content="en_GB">
+<meta property="og:image" content="https://user-friendly.fr/og-image.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="« User Friendly », écrit sur un post-it jaune, avec la mention In their own words. Recherche utilisateur.">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "User Friendly",
+  "url": "https://user-friendly.fr/",
+  "logo": "https://user-friendly.fr/og-image.png",
+  "slogan": "In their own words.",
+  "description": "Recherche utilisateur, utilisabilité et confiance dans l'IA, regard ethnographique.",
+  "email": "bonjour@user-friendly.fr",
+  "areaServed": ["FR", "GB"],
+  "knowsLanguage": ["fr", "en"],
+  "founder": {
+    "@type": "Person",
+    "name": "Xavier Marie",
+    "url": "https://xaviermarie.com/",
+    "jobTitle": "Chercheur UX senior et ethnologue",
+    "sameAs": ["https://www.linkedin.com/in/xaviermarie/"]
+  }
+}
+</script>
 <meta name="theme-color" content="#F3F2EE">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M4 4H60V50L50 60H4Z' fill='%23FFE57A'/%3E%3Cpath d='M50 60V50H60Z' fill='%23E9CB55'/%3E%3Ctext x='31' y='52' font-family='Arial,sans-serif' font-size='54' font-weight='800' text-anchor='middle' fill='%232A47E8'%3E%E2%80%9C%E2%80%9D%3C/text%3E%3C/svg%3E">
 <link rel="preload" href="./fonts/figtree-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -130,6 +160,8 @@ h1 > span:first-child .q { margin-left: -.42em; }   /* hang the opening quote in
 const t = {
   fr: {
     title: 'User Friendly — Recherche utilisateur',
+    desc: "User Friendly : recherche utilisateur, utilisabilité et confiance dans l'IA, regard ethnographique. Par Xavier Marie.",
+    fields: 'Domaines',
     lede: "Recherche utilisateur pour des produits qu'on comprend, et en qui on peut avoir confiance.",
     f1: "Utilisabilité et confiance dans l'IA",
     f1d: "Évaluer comment les gens comprennent, utilisent et jugent les assistants et services fondés sur l'IA.",
@@ -143,6 +175,8 @@ const t = {
   },
   en: {
     title: 'User Friendly — User research',
+    desc: 'User Friendly: user research, AI usability and trust, an ethnographic eye. By Xavier Marie.',
+    fields: 'Areas of practice',
     lede: 'User research for products people understand, and can trust.',
     f1: 'AI usability and trust',
     f1d: 'Assessing how people understand, use and judge AI-based assistants and services.',
@@ -158,6 +192,8 @@ const t = {
 function setLang(l) {
   l = l === 'en' ? 'en' : 'fr';
   document.documentElement.lang = l; document.title = t[l].title;
+  document.querySelector('meta[name=description]').setAttribute('content', t[l].desc);
+  document.querySelector('.fields').setAttribute('aria-label', t[l].fields);
   document.querySelectorAll('[data-i]').forEach(el => { const v = t[l][el.dataset.i]; if (v) el.textContent = v; });
   const mail = document.getElementById('mail'); mail.href = 'mailto:' + t[l].mail; mail.textContent = t[l].mail;
   document.querySelectorAll('.lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === l)));
